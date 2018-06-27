@@ -1,8 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.takusemba.gouda.protos";
-option java_outer_classname = "Prefectures";
-option go_package = "proto";
+option go_package = "sample";
 
 package prefectures;
 
