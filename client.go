@@ -33,7 +33,7 @@ func main() {
 	}
 	// fmt.Println("[body] " + string(body))
 
-	pref := &pb.GetPrefecturesResponse{}
+	pref := &pb.Prefectures{}
 	if err := proto.Unmarshal(body, pref); err != nil {
 		log.Fatalln("Failed to parse prefectures:", err)
 	}

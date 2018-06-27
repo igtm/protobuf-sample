@@ -19,7 +19,7 @@ func main() {
 	e.GET("/prefectures", func(c echo.Context) error {
 
 		// DBからPrefectureのリストと取ってくる
-		res := pb.GetPrefecturesResponse{
+		res := pb.Prefectures{
 			Prefectures: []*pb.Prefecture{
 				&pb.Prefecture{
 					Id:     1,
