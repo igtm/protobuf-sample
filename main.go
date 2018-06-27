@@ -38,6 +38,24 @@ func main() {
 
 		return c.Blob(http.StatusOK, "application/protobuf", data)
 	})
+	e.GET("/prefectures-json", func(c echo.Context) error {
+
+		// DBからPrefectureのリストと取ってくる
+		res := []map[string]interface{}{
+            map[string]interface{}{
+                "Id":     1,
+                "Name":   "北海道",
+                "Romaji": "hokkaido",
+            },
+            map[string]interface{}{
+                "Id":     47,
+                "Name":   "沖縄県",
+                "Romaji": "okinawa",
+            },
+		}
+
+		return c.JSON(http.StatusOK, res)
+	})
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

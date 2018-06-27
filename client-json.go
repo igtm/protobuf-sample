@@ -6,14 +6,11 @@ import (
 	"log"
 	"net/http"
 	"strings"
-
-	"github.com/golang/protobuf/proto"
-	"github.com/igtm/protobuf-sample/pb"
 )
 
 func main() {
 	// Get request
-	res, err := http.Get("http://localhost:1323/prefectures")
+	res, err := http.Get("http://localhost:1323/prefectures-json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,14 +28,5 @@ func main() {
 	if error != nil {
 		log.Fatal(error)
 	}
-	fmt.Printf("[body] %v\n", body)
-
-	pref := &pb.Prefectures{}
-	if err := proto.Unmarshal(body, pref); err != nil {
-		log.Fatalln("Failed to parse prefectures:", err)
-	}
-
-	for _, p := range pref.Prefectures {
-		fmt.Printf("%v, %v, %v\n", p.Id, p.Name, p.Romaji)
-	}
+	fmt.Println("[body] " + string(body))
 }
