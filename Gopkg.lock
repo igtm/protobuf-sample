@@ -16,8 +16,8 @@
 [[projects]]
   branch = "master"
   name = "github.com/igtm/protobuf-sample"
-  packages = ["proto"]
-  revision = "e02e687feabc098a15976a44736016ca47a59a72"
+  packages = ["sample"]
+  revision = "ddaf072753505ed765c3b455738ff1ada72283e7"
 
 [[projects]]
   name = "github.com/labstack/echo"
@@ -81,6 +81,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f26caf2826e2b335e678629105618712628a58545dcb36088e303e10098c240f"
+  inputs-digest = "778c9df4000e09cf206c2ea4e478becae6d413c6fb8d12d0e67eb6e051b9605d"
   solver-name = "gps-cdcl"
   solver-version = 1

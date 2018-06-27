@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/igtm/protobuf-sample/sample"
+	"github.com/igtm/protobuf-sample/pb"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -18,14 +19,14 @@ func main() {
 	e.GET("/prefectures", func(c echo.Context) error {
 
 		// DBからPrefectureのリストと取ってくる
-		res := sample.GetPrefecturesResponse{
-			Prefectures: []*sample.Prefecture{
-				&sample.Prefecture{
+		res := pb.GetPrefecturesResponse{
+			Prefectures: []*pb.Prefecture{
+				&pb.Prefecture{
 					Id:     1,
 					Name:   "北海道",
 					Romaji: "hokkaido",
 				},
-				&sample.Prefecture{
+				&pb.Prefecture{
 					Id:     47,
 					Name:   "沖縄県",
 					Romaji: "okinawa",
@@ -33,6 +34,7 @@ func main() {
 			},
 		}
 		data, _ := proto.Marshal(&res)
+		fmt.Printf(`%v`, data)
 
 		return c.Blob(http.StatusOK, "application/protobuf", data)
 	})
