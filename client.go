@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Get request
-	res, err := http.Get("http://localhost:1323/prefectures")
+	res, err := http.Get("http://localhost:1324/prefectures")
 	if err != nil {
 		log.Fatal(err)
 	}

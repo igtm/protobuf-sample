@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Get request
-	res, err := http.Get("http://localhost:1323/prefectures-json")
+	res, err := http.Get("http://localhost:1324/prefectures-json")
 	if err != nil {
 		log.Fatal(err)
 	}

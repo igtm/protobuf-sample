@@ -7,6 +7,11 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -17,6 +22,36 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+
+type InputGetPrefectures struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InputGetPrefectures) Reset()         { *m = InputGetPrefectures{} }
+func (m *InputGetPrefectures) String() string { return proto.CompactTextString(m) }
+func (*InputGetPrefectures) ProtoMessage()    {}
+func (*InputGetPrefectures) Descriptor() ([]byte, []int) {
+	return fileDescriptor_prefectures_09fcd2ef5d89a6ef, []int{0}
+}
+func (m *InputGetPrefectures) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InputGetPrefectures.Unmarshal(m, b)
+}
+func (m *InputGetPrefectures) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InputGetPrefectures.Marshal(b, m, deterministic)
+}
+func (dst *InputGetPrefectures) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InputGetPrefectures.Merge(dst, src)
+}
+func (m *InputGetPrefectures) XXX_Size() int {
+	return xxx_messageInfo_InputGetPrefectures.Size(m)
+}
+func (m *InputGetPrefectures) XXX_DiscardUnknown() {
+	xxx_messageInfo_InputGetPrefectures.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InputGetPrefectures proto.InternalMessageInfo
 
 type Prefecture struct {
 	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -31,7 +66,7 @@ func (m *Prefecture) Reset()         { *m = Prefecture{} }
 func (m *Prefecture) String() string { return proto.CompactTextString(m) }
 func (*Prefecture) ProtoMessage()    {}
 func (*Prefecture) Descriptor() ([]byte, []int) {
-	return fileDescriptor_prefectures_e8abb3363ac5e1d8, []int{0}
+	return fileDescriptor_prefectures_09fcd2ef5d89a6ef, []int{1}
 }
 func (m *Prefecture) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Prefecture.Unmarshal(m, b)
@@ -83,7 +118,7 @@ func (m *Prefectures) Reset()         { *m = Prefectures{} }
 func (m *Prefectures) String() string { return proto.CompactTextString(m) }
 func (*Prefectures) ProtoMessage()    {}
 func (*Prefectures) Descriptor() ([]byte, []int) {
-	return fileDescriptor_prefectures_e8abb3363ac5e1d8, []int{1}
+	return fileDescriptor_prefectures_09fcd2ef5d89a6ef, []int{2}
 }
 func (m *Prefectures) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Prefectures.Unmarshal(m, b)
@@ -111,21 +146,97 @@ func (m *Prefectures) GetPrefectures() []*Prefecture {
 }
 
 func init() {
+	proto.RegisterType((*InputGetPrefectures)(nil), "pb.InputGetPrefectures")
 	proto.RegisterType((*Prefecture)(nil), "pb.Prefecture")
 	proto.RegisterType((*Prefectures)(nil), "pb.Prefectures")
 }
 
-func init() { proto.RegisterFile("prefectures.proto", fileDescriptor_prefectures_e8abb3363ac5e1d8) }
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
 
-var fileDescriptor_prefectures_e8abb3363ac5e1d8 = []byte{
-	// 144 bytes of a gzipped FileDescriptorProto
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// PrefectureServiceClient is the client API for PrefectureService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type PrefectureServiceClient interface {
+	GetPrefectures(ctx context.Context, in *InputGetPrefectures, opts ...grpc.CallOption) (*Prefectures, error)
+}
+
+type prefectureServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewPrefectureServiceClient(cc *grpc.ClientConn) PrefectureServiceClient {
+	return &prefectureServiceClient{cc}
+}
+
+func (c *prefectureServiceClient) GetPrefectures(ctx context.Context, in *InputGetPrefectures, opts ...grpc.CallOption) (*Prefectures, error) {
+	out := new(Prefectures)
+	err := c.cc.Invoke(ctx, "/pb.PrefectureService/GetPrefectures", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PrefectureServiceServer is the server API for PrefectureService service.
+type PrefectureServiceServer interface {
+	GetPrefectures(context.Context, *InputGetPrefectures) (*Prefectures, error)
+}
+
+func RegisterPrefectureServiceServer(s *grpc.Server, srv PrefectureServiceServer) {
+	s.RegisterService(&_PrefectureService_serviceDesc, srv)
+}
+
+func _PrefectureService_GetPrefectures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InputGetPrefectures)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PrefectureServiceServer).GetPrefectures(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.PrefectureService/GetPrefectures",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PrefectureServiceServer).GetPrefectures(ctx, req.(*InputGetPrefectures))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _PrefectureService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.PrefectureService",
+	HandlerType: (*PrefectureServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPrefectures",
+			Handler:    _PrefectureService_GetPrefectures_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "prefectures.proto",
+}
+
+func init() { proto.RegisterFile("prefectures.proto", fileDescriptor_prefectures_09fcd2ef5d89a6ef) }
+
+var fileDescriptor_prefectures_09fcd2ef5d89a6ef = []byte{
+	// 190 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x2c, 0x28, 0x4a, 0x4d,
 	0x4b, 0x4d, 0x2e, 0x29, 0x2d, 0x4a, 0x2d, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a,
-	0x48, 0x52, 0xf2, 0xe0, 0xe2, 0x0a, 0x80, 0x4b, 0x08, 0xf1, 0x71, 0x31, 0x65, 0xa6, 0x48, 0x30,
-	0x2a, 0x30, 0x6a, 0x30, 0x07, 0x31, 0x65, 0xa6, 0x08, 0x09, 0x71, 0xb1, 0xe4, 0x25, 0xe6, 0xa6,
-	0x4a, 0x30, 0x29, 0x30, 0x6a, 0x70, 0x06, 0x81, 0xd9, 0x42, 0x62, 0x5c, 0x6c, 0x45, 0xf9, 0xb9,
-	0x89, 0x59, 0x99, 0x12, 0xcc, 0x60, 0x51, 0x28, 0x4f, 0xc9, 0x9e, 0x8b, 0x1b, 0x61, 0x52, 0xb1,
-	0x90, 0x01, 0x17, 0x37, 0x92, 0x8d, 0x12, 0x8c, 0x0a, 0xcc, 0x1a, 0xdc, 0x46, 0x7c, 0x7a, 0x05,
-	0x49, 0x7a, 0x08, 0x55, 0x41, 0xc8, 0x4a, 0x9c, 0x58, 0xa2, 0x98, 0x0a, 0x92, 0x92, 0xd8, 0xc0,
-	0x6e, 0x33, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x58, 0xbc, 0x14, 0x95, 0xb0, 0x00, 0x00, 0x00,
+	0x48, 0x52, 0x12, 0xe5, 0x12, 0xf6, 0xcc, 0x2b, 0x28, 0x2d, 0x71, 0x4f, 0x2d, 0x09, 0x40, 0x28,
+	0x50, 0xf2, 0xe0, 0xe2, 0x42, 0x70, 0x85, 0xf8, 0xb8, 0x98, 0x32, 0x53, 0x24, 0x18, 0x15, 0x18,
+	0x35, 0x98, 0x83, 0x98, 0x32, 0x53, 0x84, 0x84, 0xb8, 0x58, 0xf2, 0x12, 0x73, 0x53, 0x25, 0x98,
+	0x14, 0x18, 0x35, 0x38, 0x83, 0xc0, 0x6c, 0x21, 0x31, 0x2e, 0xb6, 0xa2, 0xfc, 0xdc, 0xc4, 0xac,
+	0x4c, 0x09, 0x66, 0xb0, 0x28, 0x94, 0xa7, 0x64, 0xcf, 0xc5, 0x8d, 0x64, 0xb0, 0x90, 0x01, 0x17,
+	0x37, 0x92, 0x43, 0x24, 0x18, 0x15, 0x98, 0x35, 0xb8, 0x8d, 0xf8, 0xf4, 0x0a, 0x92, 0xf4, 0x10,
+	0xaa, 0x82, 0x90, 0x95, 0x18, 0x05, 0x72, 0x09, 0x22, 0xa4, 0x82, 0x53, 0x8b, 0xca, 0x32, 0x93,
+	0x53, 0x85, 0x6c, 0xb8, 0xf8, 0x50, 0x5d, 0x2c, 0x24, 0x0e, 0x32, 0x03, 0x8b, 0x57, 0xa4, 0xf8,
+	0x51, 0x0d, 0x2f, 0x56, 0x62, 0x70, 0x62, 0x89, 0x62, 0x2a, 0x48, 0x4a, 0x62, 0x03, 0x87, 0x82,
+	0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x53, 0x5c, 0xbc, 0x8a, 0x1a, 0x01, 0x00, 0x00,
 }
